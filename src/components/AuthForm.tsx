@@ -12,9 +12,11 @@ import {
   Button,
   Link,
 } from "@heroui/react";
+import { useRouter } from "next/navigation";
 
 export default function AuthForm() {
   const supabase = createClient();
+  const router = useRouter();
   const [isSignUp, setIsSignUp] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -52,7 +54,10 @@ export default function AuthForm() {
         password,
       });
       if (error) setMessage(`Error: ${error.message}`);
-      else setMessage("¡Sesión iniciada con éxito!");
+      else {
+        router.push("/");
+        router.refresh();
+      }
     }
     setLoading(false);
   };
